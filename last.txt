@@ -1,0 +1,61 @@
+1)Highest Rock Songs Played
+SELECT A1.artistid,A1.name,count(T.name) Songs
+FROM Genre G
+JOIN Track T
+ON G.Genreid=T.GenreID
+JOIN Album A
+ON A.Albumid = t.Albumid
+JOIN Artist A1
+ON A.ArtistId=A1.ArtistId
+Where G.Name ="Rock"
+GROUP BY A1.name
+ORDER BY Count(T.Name) DESC
+LIMIT 10;
+
+
+
+2)Highest Amount Earned Artist
+SELECT A3.name , SUM(I1.UnitPrice*I1.Quantity) AmountSpent
+FROM InvoiceLine I1
+JOIN Track T
+ON I1.TrackId=T.TrackId
+JOIN Album A2
+ON T.AlbumId = A2.AlbumId
+Join Artist A3
+On A2.ArtistId=A3.ArtistId
+GROUP BY A3.name
+ORDER BY AmountSpent desc
+LIMIT 10;
+
+
+4)HIGHEST Numbers of Video Track
+SELECT A1.ArtistId,A1.name,M.name,count(T.name) Number_Video_tracks 
+FROM MediaType M
+JOIN Track T
+ON T.MediaTypeId = M.MediaTypeid
+JOIN Album A
+ON T.AlbumId = A.AlbumId
+JOIN Artist A1
+ON A.ArtistId = A1.ArtistId
+WHERE M.name="Protected MPEG-4 video file"
+GROUP BY A1.name
+ORDER BY  Number_Video_tracks desc
+LIMIT 10;
+
+3)Customer Spent Highest in Rock Track
+SELECT C.FirstName,G.Name,SUM(I1.UnitPrice * I1.Quantity) AS Spent
+FROM Customer C
+JOIN Invoice I
+ON I.CustomerId = C.CustomerId
+JOIN InvoiceLine I1
+ON I1.InvoiceId = I.InvoiceId
+JOIN Track T
+ON I1.TrackId = T.TrackId
+JOIN Genre G
+ON T.GenreId = G.GenreId
+WHERE G.name ="Rock"
+GROUP BY C.CustomerId
+Order BY Spent desc;
+
+
+
